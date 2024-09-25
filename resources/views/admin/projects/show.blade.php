@@ -21,6 +21,13 @@
     <h1 class="mt-3">{{ $project->title }}</h1>
     <h4>Categoria: {{ $project->category }}</h4>
     <h5>Tipo: {{ $project->type ? $project->type->name : 'NESSUN TIPO' }}</h5>
+    @forelse ($project->technologies as $technology)
+      <span class="badge text-bg-warning mb-3">
+        {{ $technology->name }}
+      </span>
+    @empty
+      <span>-</span>
+    @endforelse
     <p>{{ $project->description }}</p>
     <a href="{{ route('admin.projects.index') }}" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></i></a>
 </div>

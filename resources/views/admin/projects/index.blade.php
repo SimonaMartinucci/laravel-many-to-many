@@ -16,10 +16,11 @@
         <th class="w-25" scope="col">Titolo</th>
         <th scope="col">Categoria</th>
         <th scope="col">Tipo</th>
+        <th class="w-25" scope="col">Tecnologia</th>
         <th scope="col">Inizio</th>
         <th scope="col">Fine</th>
-        <th class="w-25" scope="col">URL</th>
-        <th scope="col"></th>
+        <th scope="col">URL</th>
+        <th class="w-25" scope="col"></th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,15 @@
         <th scope="row">{{ $project->title }}</td>
         <td scope="row">{{ $project->category }}</td>
         <td scope="row">{{ $project->type ? $project->type->name : 'NESSUN TIPO' }}</td>
+        <td scope="row">
+          @forelse ($project->technologies as $technology)
+            <span class="badge text-bg-warning">
+              {{ $technology->name }}
+            </span>
+          @empty
+            <span>-</span>
+          @endforelse
+        </td>
         <td scope="row">{{ \Carbon\Carbon::parse($project->start_date)->format('d/m/Y') }}</td>
         <td scope="row">{{ $project->end_date ? 'IN CORSO' : \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') }}</td>
         <td scope="row">{{ $project->project_url }}</td>
