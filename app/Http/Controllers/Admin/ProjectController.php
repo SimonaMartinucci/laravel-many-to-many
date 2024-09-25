@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 use App\Functions\Helper;
 use App\Http\Requests\ProjectRequest;
 
@@ -26,7 +27,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -36,8 +38,13 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Project::class);
-        $newProject = Project::create($data);
-        return redirect()->route('admin.projects.show', $newProject);
+        $project = Project::create($data);
+
+        if(array_key_exists('technologies', $data)){
+            $project->technologies()->attach($data['technologies']);
+        }
+
+        return redirect()->route('admin.projects.show', $project);
     }
 
     /**
@@ -55,7 +62,8 @@ class ProjectController extends Controller
     {
         $project = Project::find($id);
         $types = Type::all();
-        return view('admin.projects.edit', compact('project', 'types'));
+        $technologies = Technology::all();
+        return view('admin.projects.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -73,6 +81,13 @@ class ProjectController extends Controller
         };
 
         $project->update($data);
+
+        if(array_key_exists('technologies', $data)){
+            $project->technologies()->sync($data['technologies']);
+        }else{
+            $project->technologies()->detach();
+        }
+
         return redirect()->route('admin.projects.show', $project)->with('edited', 'Modifica avvenuta con successo');
 
     }
