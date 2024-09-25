@@ -1,0 +1,38 @@
+header,
+aside {
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
+header>div {
+    height: 60px;
+}
+
+li {
+    list-style-type: none;
+}
+
+.main-wrapper {
+    height: calc(100vh - 60px);
+}
+
+aside {
+    width: 180px;
+    height: 100%;
+}
+
+.content {
+    overflow-y: auto;
+    width: calc(100% - 180px);
+}
+
+a {
+    text-decoration: none;
+    color: black;
+
+    &:hover {
+        color: gray;
+    }
+}
