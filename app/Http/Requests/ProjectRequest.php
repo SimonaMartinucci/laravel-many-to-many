@@ -25,6 +25,8 @@ class ProjectRequest extends FormRequest
             'title' => 'required|min:3|max:150',
             'category' => 'required|min:3|max:150',
             'description' => 'required|min:10|max:1000',
+            'path_img' => 'min:3|image',
+            'img_original_name' => 'min:3',
             'start_date' => 'required|date',
             'end_date' => 'date',
             'project_url' => 'required|min:5|max:500',
@@ -44,6 +46,11 @@ class ProjectRequest extends FormRequest
             'description.required' => 'La descrizione è un campo obbligatorio.',
             'description.min' => 'La descrizione deve avere almeno :min caratteri.',
             'description.max' => 'La descrizione non può superare i :max caratteri.',
+
+            'path_img.min' => 'Il percorso dell\'immagine deve avere almeno :min caratteri.',
+            'path_img.image' => 'Il percorso dell\'immagine deve richiamare un\'immagine.',
+
+            'img_original_name.min' => 'Il nome originale dell\'immagine deve avere almeno :min caratteri.',
         
             'start_date.required' => 'La data di inizio è un campo obbligatorio.',
             'start_date.date' => 'La data di inizio deve essere una data valida.',

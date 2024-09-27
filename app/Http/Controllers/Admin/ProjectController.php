@@ -9,6 +9,7 @@ use App\Models\Type;
 use App\Models\Technology;
 use App\Functions\Helper;
 use App\Http\Requests\ProjectRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -38,6 +39,14 @@ class ProjectController extends Controller
     {
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Project::class);
+        
+        if(array_key_exists('path_img', $data)){
+            $img_path = Storage::put('uploads', $data['path_img']);
+            $original_name = $request->file('path_img')->getClientOriginalName();
+            $data['path_img'] = $img_path;
+            $data['img_original_name'] = $original_name;
+        }
+
         $project = Project::create($data);
 
         if(array_key_exists('technologies', $data)){
@@ -79,6 +88,13 @@ class ProjectController extends Controller
         }else{
             $data['slug'] = Helper::generateSlug($data['title'], Project::class);
         };
+
+        if(array_key_exists('path_img', $data)){
+            $img_path = Storage::put('uploads', $data['path_img']);
+            $original_name = $request->file('path_img')->getClientOriginalName();
+            $data['path_img'] = $img_path;
+            $data['img_original_name'] = $original_name;
+        }
 
         $project->update($data);
 

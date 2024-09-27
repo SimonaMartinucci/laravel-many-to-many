@@ -14,7 +14,7 @@
     </div>
     @endif
     
-    <form action="{{ route('admin.projects.store') }}" method="POST">
+    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
     @csrf
         <label class="form-label mt-3 d-block" for="title">Titolo</label>
         <input type="text" name="title" value="{{ old('title') }}" class="form-control @error('title') is-invalid @enderror">
@@ -56,6 +56,14 @@
         <label class="form-label mt-3 d-block" for="description">Descrizione</label>
         <textarea name="description" value="{{ old('description') }}" class="form-control @error('description') is-invalid @enderror"></textarea>
         @error('description')
+        <small class="text-danger d-block">
+            {{ $message }}
+        </small>
+        @enderror
+
+        <label for="path_img" class="form-label mt-3 d-block">Immagine</label>
+        <input type="file" id="path_img" name="path_img" class="form-control">
+        @error('path_img')
         <small class="text-danger d-block">
             {{ $message }}
         </small>

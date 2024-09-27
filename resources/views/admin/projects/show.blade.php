@@ -29,7 +29,11 @@
       <span>-</span>
     @endforelse
     <p>{{ $project->description }}</p>
+
+    <img src="{{ asset('storage/' . $project->path_img) }}" class="mb-4" alt="{{ $project->name }}">
+
     <a href="{{ route('admin.projects.index') }}" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i></i></a>
+
 </div>
 
 @endsection
